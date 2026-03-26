@@ -127,11 +127,3 @@ class AppRouter:
         async def get_filehash_details(filehash: str, refresh: bool = Query(False), session = Depends(db.get_db)):
             res = await self.service.get_filehash_data(filehash, refresh, session)
             return res
-            
-            
-
-
-
-# router = APIRouter()
-
-# @router.get("/router")

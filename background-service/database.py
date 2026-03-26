@@ -18,8 +18,10 @@ VT_API_KEY = os.getenv("VT_API_KEY")
 if not (DB_USERNAME and DB_PASSWORD and DB_HOST and DB_PORT and DB_NAME and REDIS_HOST and REDIS_PORT and VT_API_KEY):
     sys.exit(".env file missing or fields missing. Refer .env.example for creating proper .env file")
 
+
 DATABASE_URL = f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 Base = declarative_base()
+
 
 # reports - table
 class Report(Base):
@@ -55,10 +57,6 @@ class Database:
             decode_responses=True
         )
     def get_db(self):
-        db_session = self.Session()
-        try:
-            yield db_session
-        finally:
-            db_session.close()
+        return self.Session()
 
 db = Database()

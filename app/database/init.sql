@@ -1,15 +1,24 @@
-GRANT ALL ON SCHEMA public TO db_user;
+-- 1. Create user (if not )
+CREATE ROLE :DB_USERNAME LOGIN PASSWORD :'DB_PASSWORD';
 
-CREATE DATABASE virus_total OWNER db_user;
+-- 2. Create database
+CREATE DATABASE :DB_NAME OWNER :DB_USERNAME;
 
-\connect virus_total;
+-- 3. Connect to the database
+\connect :DB_NAME :DB_USERNAME :DB_HOST;
 
-GRANT ALL PRIVILEGES ON DATABASE virus_total TO db_user;
+-- 4. Grant privileges on database
+GRANT ALL PRIVILEGES ON DATABASE :DB_NAME TO :DB_USERNAME;
 
+-- 5. Grant schema permissions
+GRANT ALL ON SCHEMA public TO :DB_USERNAME;
+
+-- 6. Create table
 CREATE TABLE IF NOT EXISTS reports (
     identifier VARCHAR PRIMARY KEY,
     identifier_type INTEGER DEFAULT 1,
     data JSONB
 );
 
-ALTER TABLE reports OWNER TO db_user;
+-- 7. Ensure ownership
+ALTER TABLE reports OWNER TO :DB_USERNAME;

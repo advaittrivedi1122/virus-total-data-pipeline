@@ -14,5 +14,3 @@ app = Application().app
 @app.get("/")
 async def root():
     return {"message":"Virus Total Data Pipeline"}
-
-# app.include_router(router)
